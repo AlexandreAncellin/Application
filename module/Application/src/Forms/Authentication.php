@@ -13,18 +13,53 @@ class Authentication extends Form
     {
         parent::__construct();
 
-        $name = new Element('username');
-        $name   ->setLabel('Nom de famille :')
-                ->setAttributes(array(
-                    'type' => 'text',
-                    'class' => 'form-control',
-                    'id' => 'name'
-                ));
+        $firstName = new Element('firstname');
+        $firstName
+            ->setLabel('Prénom')
+            ->setAttributes(array(
+                'type' => 'text',
+                'class' => 'form-control',
+                'id' => 'firstname'
+            ));
 
-        $button = new Element\Button('validate');
-        $button ->setLabel('Valider');
+        $lastName = new Element('lastname');
+        $lastName
+            ->setLabel('Nom')
+            ->setAttributes(array(
+                'type' => 'text',
+                'class' => 'form-control',
+                'id' => 'lastname'
+            ));
 
-        $this   ->add($name)
+        $email = new Element('email');
+        $email
+            ->setLabel('Email')
+            ->setAttributes(array(
+                'type' => 'email',
+                'class' => 'form-control',
+                'id' => 'email'
+            ));
+
+        $password = new Element('password');
+        $password
+            ->setLabel('Mot de passe')
+            ->setAttributes(array(
+                'type' => 'password',
+                'class' => 'form-control',
+                'id' => 'password'
+            ));
+
+        $button = new Element\Button('Validate');
+        $button
+            ->setLabel('Valider')
+            ->setAttributes(array(
+                'class' => 'btn btn-primary'
+            ));
+
+        $this   ->add($firstName)
+                ->add($lastName)
+                ->add($email)
+                ->add($password)
                 ->add($button);
     }
 }
