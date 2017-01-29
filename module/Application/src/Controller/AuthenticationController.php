@@ -8,6 +8,7 @@
 namespace Application\Controller;
 
 use Application\Forms\Authentication;
+use Application\Models\AuthenticationModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class AuthenticationController extends AbstractActionController
@@ -16,9 +17,16 @@ class AuthenticationController extends AbstractActionController
     {
         $form = new Authentication();
 
-        if ($this->getRequest()->isPost() && ($form->isValid()))
-        {
-            var_dump('ok');
+        if ($this->getRequest()->isPost()) {
+
+            $authenticationModel = new AuthenticationModel();
+            $form->setInputFilter($authenticationModel->getInputFilter());
+
+            $form->setData($this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+
+            }
         }
         return array('form' => $form);
     }

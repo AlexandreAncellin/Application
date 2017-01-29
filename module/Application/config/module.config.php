@@ -25,7 +25,7 @@ return [
                 ],
             ],
             'authentication' => [
-                'type'    => Segment::class,
+                'type'    => Literal::class,
                 'options' => [
                     'route'    => '/inscription',
                     'defaults' => [
@@ -39,6 +39,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\AuthenticationController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [

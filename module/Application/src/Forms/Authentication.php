@@ -40,20 +40,20 @@ class Authentication extends Form
                 'id' => 'email'
             ));
 
-        $password = new Element('password');
+        $password = new Element\Password('password');
         $password
             ->setLabel('Mot de passe')
             ->setAttributes(array(
-                'type' => 'password',
                 'class' => 'form-control',
                 'id' => 'password'
             ));
 
-        $button = new Element\Button('Validate');
+        $button = new Element\Button('validate');
         $button
             ->setLabel('Valider')
             ->setAttributes(array(
-                'class' => 'btn btn-primary'
+                'class' =>  'btn btn-primary',
+                'type'  =>  'submit'
             ));
 
         $this   ->add($firstName)
