@@ -24,12 +24,12 @@ return [
                     ],
                 ],
             ],
-            'application' => [
+            'authentication' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/application[/:action]',
+                    'route'    => '/inscription',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\AuthenticationController::class,
                         'action'     => 'index',
                     ],
                 ],

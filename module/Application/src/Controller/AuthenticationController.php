@@ -7,12 +7,19 @@
 
 namespace Application\Controller;
 
+use Application\Forms\Authentication;
 use Zend\Mvc\Controller\AbstractActionController;
 
-class IndexController extends AbstractActionController
+class AuthenticationController extends AbstractActionController
 {
     public function indexAction()
     {
+        $form = new Authentication();
 
+        if ($this->getRequest()->isPost() && ($form->isValid()))
+        {
+            var_dump('ok');
+        }
+        return array('form' => $form);
     }
 }
