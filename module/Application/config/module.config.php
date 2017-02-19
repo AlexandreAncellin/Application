@@ -30,7 +30,17 @@ return [
                     'route'    => '/inscription',
                     'defaults' => [
                         'controller' => Controller\AuthenticationController::class,
-                        'action'     => 'index',
+                        'action'     => 'register',
+                    ],
+                ],
+            ],
+            'login' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/connexion',
+                    'defaults' => [
+                        'controller' => Controller\AuthenticationController::class,
+                        'action'     => 'login',
                     ],
                 ],
             ],
@@ -40,6 +50,7 @@ return [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthenticationController::class => InvokableFactory::class,
+            Controller\AdminController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
