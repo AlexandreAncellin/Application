@@ -7,15 +7,18 @@
 
 namespace Application\Controller;
 
-use Application\Forms\Authentication;
+use Application\Forms\LoginForm;
+use Application\Forms\RegisterForm;
 use Application\Models\AuthenticationModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
+
 class AuthenticationController extends AbstractActionController
 {
-    public function indexAction()
+    public function registerAction()
     {
-        $form = new Authentication();
+
+        $form = new RegisterForm();
 
         if ($this->getRequest()->isPost()) {
 
@@ -28,6 +31,25 @@ class AuthenticationController extends AbstractActionController
 
             }
         }
+        return array('form' => $form);
+    }
+
+    public function loginAction()
+    {
+        $form = new LoginForm();
+
+        if ($this->getRequest()->isPost()) {
+
+            $authenticationModel = new AuthenticationModel();
+            $form->setInputFilter($authenticationModel->getInputFilter());
+
+            $form->setData($this->getRequest()->getPost());
+
+            if ($form->isValid()) {
+
+            }
+        }
+
         return array('form' => $form);
     }
 }

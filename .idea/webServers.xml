@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d6dff20f-e52e-47da-8db7-0d873b7afc0e" name="devAlex" url="http://www.devapp.tf/alex">
+        <fileTransfer host="163.172.80.34" port="22" rootFolder="/var/www/html/alex" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,43 +1,28 @@
 <?php
 /**
  * Created by : Alexandre Ancellin
- * Date: 29/01/2017
+ * Date: 05/02/2017
  */
+
 namespace Application\Forms;
+
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-class Authentication extends Form
+class LoginForm extends Form
 {
+
     public function __construct()
     {
         parent::__construct();
 
-        $firstName = new Element('firstname');
-        $firstName
-            ->setLabel('Prénom')
+        $login = new Element('login');
+        $login
+            ->setLabel('login')
             ->setAttributes(array(
                 'type' => 'text',
                 'class' => 'form-control',
-                'id' => 'firstname'
-            ));
-
-        $lastName = new Element('lastname');
-        $lastName
-            ->setLabel('Nom')
-            ->setAttributes(array(
-                'type' => 'text',
-                'class' => 'form-control',
-                'id' => 'lastname'
-            ));
-
-        $email = new Element('email');
-        $email
-            ->setLabel('Email')
-            ->setAttributes(array(
-                'type' => 'email',
-                'class' => 'form-control',
-                'id' => 'email'
+                'id' => 'login'
             ));
 
         $password = new Element\Password('password');
@@ -56,9 +41,7 @@ class Authentication extends Form
                 'type'  =>  'submit'
             ));
 
-        $this   ->add($firstName)
-                ->add($lastName)
-                ->add($email)
+        $this   ->add($login)
                 ->add($password)
                 ->add($button);
     }
