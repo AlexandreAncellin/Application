@@ -18,7 +18,7 @@ class LoginForm extends Form
 
         $login = new Element('login');
         $login
-            ->setLabel('login')
+            ->setLabel('login (email)')
             ->setAttributes(array(
                 'type' => 'text',
                 'class' => 'form-control',
@@ -38,8 +38,11 @@ class LoginForm extends Form
             ->setLabel('Valider')
             ->setAttributes(array(
                 'class' =>  'btn btn-primary',
-                'type'  =>  'submit'
+                'id'    =>  'ValidLoginForm'
+
             ));
+
+        $this->setAttribute('id', "loginForm");
 
         $this   ->add($login)
                 ->add($password)

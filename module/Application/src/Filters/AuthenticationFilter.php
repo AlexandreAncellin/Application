@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Models;
+namespace Application\Filters;
 
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;

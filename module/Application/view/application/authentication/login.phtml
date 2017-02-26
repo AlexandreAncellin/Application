@@ -1,5 +1,4 @@
 <?php $form = $this->form; ?>
-<?php $form->setAttribute('action', $this->url('login')) ?>
 
 <?php
 $helper = $this->formElementErrors();
@@ -30,4 +29,32 @@ $helper->setMessageCloseString('</div>');
     </div>
 </div>
 
+<h5>Liste des utilisateurs enregistrés : </h5>
+<div id="users" class="jumbotron">
 
+</div>
+
+<script>
+
+    $.ajax({
+        url: "<?= $this->url('users', array("id", 1));?>",
+        method: 'GET',
+        dataType: "json"
+    }).then(function(data) {
+        $.each( data, function( key, val ) {
+            $('#users').append( "<li>" + val.firstname + " " + val.lastname + " " + val.email + " " + val.password + "</li>" );
+        });
+
+    });
+
+    $('#ValidLoginForm').click(function() {
+        $.ajax({
+            url: "<?= $this->url('login');?>",
+            method: 'POST',
+            data: $('#loginForm').serialize()
+        }).then(function(data) {
+            console.log(data);
+        });
+    })
+
+</script>

@@ -9,21 +9,21 @@ namespace Application\Controller;
 
 use Application\Forms\LoginForm;
 use Application\Forms\RegisterForm;
-use Application\Models\AuthenticationModel;
+use Application\Models\UsersModel;
 use Zend\Mvc\Controller\AbstractActionController;
-
+use Application\Filters\LoginFilter;
+use Zend\View\Model\JsonModel;
 
 class AuthenticationController extends AbstractActionController
 {
     public function registerAction()
     {
-
         $form = new RegisterForm();
 
         if ($this->getRequest()->isPost()) {
 
-            $authenticationModel = new AuthenticationModel();
-            $form->setInputFilter($authenticationModel->getInputFilter());
+            $authenticationFilter = new AuthenticationFilter();
+            $form->setInputFilter($authenticationFilter->getInputFilter());
 
             $form->setData($this->getRequest()->getPost());
 
@@ -40,16 +40,21 @@ class AuthenticationController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
 
-            $authenticationModel = new AuthenticationModel();
-            $form->setInputFilter($authenticationModel->getInputFilter());
+            $loginFilter = new LoginFilter();
+            $form->setInputFilter($loginFilter->getInputFilter());
 
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
 
+                $userModel = new UsersModel();
+                $user = $userModel->getUserByEmail($_POST['login']);
+
+                return new JsonModel($user);
             }
         }
 
         return array('form' => $form);
     }
+
 }

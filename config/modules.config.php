@@ -19,4 +19,5 @@ return [
     'Zend\I18n',
     'Application',
 
+
 ];
