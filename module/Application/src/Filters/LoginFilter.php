@@ -6,7 +6,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class AuthenticationFilter implements InputFilterAwareInterface
+class LoginFilter implements InputFilterAwareInterface
 {
     protected $inputFilter;
 
@@ -21,17 +21,7 @@ class AuthenticationFilter implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name'     => 'firstname',
-                'required' => true
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'lastname',
-                'required' => true
-            ));
-
-            $inputFilter->add(array(
-                'name'     => 'email',
+                'name'     => 'login',
                 'required' => true
             ));
 

@@ -44,6 +44,16 @@ return [
                     ],
                 ],
             ],
+            'users' => [
+                'type'    => 'segment',
+                'options' => [
+                    'route'    => '/users[/:id]',
+                    'defaults' => [
+                        'controller' => Controller\UsersController::class,
+                        'action'     => 'users',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -51,6 +61,7 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\AuthenticationController::class => InvokableFactory::class,
             Controller\AdminController::class => InvokableFactory::class,
+            Controller\UsersController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
@@ -79,4 +90,5 @@ return [
             ),
         ),
     ),
+
 ];
