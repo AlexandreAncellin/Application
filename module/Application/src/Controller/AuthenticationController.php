@@ -13,6 +13,7 @@ use Application\Models\UsersModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\Filters\LoginFilter;
 use Zend\View\Model\JsonModel;
+use Application\Filters\AuthenticationFilter;
 
 class AuthenticationController extends AbstractActionController
 {
@@ -29,6 +30,8 @@ class AuthenticationController extends AbstractActionController
 
             if ($form->isValid()) {
 
+
+                return new JsonModel(array('test' => 'test'));
             }
         }
         return array('form' => $form);

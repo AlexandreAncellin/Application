@@ -53,8 +53,11 @@ class RegisterForm extends Form
             ->setLabel('Valider')
             ->setAttributes(array(
                 'class' =>  'btn btn-primary',
-                'type'  =>  'submit'
+                'type'  =>  'submit',
+                'id'    =>  'ValidRegisterForm'
             ));
+
+        $this->setAttribute('id', "registerForm");
 
         $this   ->add($firstName)
                 ->add($lastName)

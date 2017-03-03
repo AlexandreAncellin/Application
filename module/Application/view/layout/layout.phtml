@@ -17,9 +17,11 @@
         <?= $this->headScript()
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+            ->prependFile($this->basePath('js/angular.min.js'))
         ?>
+        <script> var app = angular.module('Front', []); </script>
     </head>
-    <body>
+    <body ng-app="Front">
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,6 +29,7 @@
                     <li><a href="./" class="navbar-brand"><?= $this->translate('layout.application.name') ?></a></li>
                     <li><a href="./inscription"><?= $this->translate('menu.authentication') ?></a></li>
                     <li><a href="./connexion"><?= $this->translate('menu.connexion') ?></a></li>
+                    <li><a href="./administration"><?= $this->translate('menu.administration') ?></a> </li>
                 </ul>
             </div>
         </div>

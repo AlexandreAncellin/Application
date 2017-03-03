@@ -48,4 +48,16 @@ $helper->setMessageCloseString('</div>');
     </div>
 </div>
 
+<script>
+    $('#ValidRegisterForm').click(function() {
+        $.ajax({
+            url: "<?= $this->url('authentication');?>",
+            method: 'POST',
+            data: $('#loginForm').serialize()
+        }).then(function(data) {
+            console.log(data);
+        });
+    })
+</script>
+
 

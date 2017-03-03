@@ -26,4 +26,8 @@ class UsersController extends AbstractActionController
             return new JsonModel($userModel->getUsers());
         }
     }
+
+    public function addUserAction($user) {
+
+    }
 }
