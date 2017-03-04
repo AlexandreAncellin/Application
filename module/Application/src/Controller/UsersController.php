@@ -7,11 +7,10 @@
 namespace Application\Controller;
 
 use Application\Models\UsersModel;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Helper\ViewModel;
 
-class UsersController extends AbstractActionController
+class UsersController extends DefaultController
 {
     public function usersAction() {
 

@@ -54,6 +54,26 @@ return [
                     ],
                 ],
             ],
+            'wall' => [
+                'type'    => 'segment',
+                'options' => [
+                    'route'    => '/page[/:id]',
+                    'defaults' => [
+                        'controller' => Controller\WallController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'administration' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/administration',
+                    'defaults' => [
+                        'controller' => Controller\AdminController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -62,6 +82,7 @@ return [
             Controller\AuthenticationController::class => InvokableFactory::class,
             Controller\AdminController::class => InvokableFactory::class,
             Controller\UsersController::class => InvokableFactory::class,
+            Controller\WallController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
