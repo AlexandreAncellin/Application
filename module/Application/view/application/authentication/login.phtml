@@ -28,30 +28,37 @@ $helper->setMessageCloseString('</div>');
         <?= $this->form()->closeTag() ?>
     </div>
 </div>
-
-<h5>Liste des utilisateurs enregistrés : </h5>
-<div id="users" class="jumbotron">
-
-</div>
+<table ng-controller="UsersController" class="table table-striped" id="users">
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Mot de Passe</th>
+    </tr>
+    <tr ng-repeat="user in users">
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.password}}</td>
+    </tr>
+</table>
 
 <script>
 
-    $.ajax({
-        url: "<?= $this->url('users', array("id", 1));?>",
-        method: 'GET',
-        dataType: "json"
-    }).then(function(data) {
-        $.each( data, function( key, val ) {
-            $('#users').append( "<li>" + val.firstname + " " + val.lastname + " " + val.email + " " + val.password + "</li>" );
-        });
 
+    app.controller('UsersController', function($scope, $http) {
+        $http.get("<?= $this->url('users', array("id", 1));?>")
+            .then(function(response) {
+                $scope.users = response.data;
+                console.log($scope.users);
+            });
     });
 
     $('#ValidLoginForm').click(function() {
         $.ajax({
             url: "<?= $this->url('login');?>",
             method: 'POST',
-            data: $('#loginForm').serialize()
+            data: $('#registerForm').serialize()
         }).then(function(data) {
             console.log(data);
         });

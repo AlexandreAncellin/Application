@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    "layout.application.name"   => "Nom de l'application",
+    "layout.application.name"   => "Baggala",
     "menu.authentication"       => "Inscription",
     "menu.connexion"            => "Connexion"
     );
