@@ -6,19 +6,7 @@ $helper = $this->formElementErrors();
 $helper->setMessageOpenFormat('<div class="alert alert-danger">');
 $helper->setMessageCloseString('</div>');
 ?>
-
-<div class="col-md-6">
-    <div class="jumbotron">
-        <h3>Leela, are you alright? You got wanged on the head.</h3>
-        <hr>
-        <h5>Bender, I didn't know you liked cooking. That's so cute. And so we say goodbye to our beloved pet, Nibbler, who's gone to a place where I, too, hope one day to go. The toilet. What kind of a father would I be if I said no?</h5>
-        <h5>We're rescuing ya. If rubbin' frozen dirt in your crotch is wrong, hey I don't wanna be right. In our darkest hour, we can stand erect, with proud upthrust bosoms. In our darkest hour, we can stand erect, with proud upthrust bosoms.</h5>
-        <h5>You can see how I lived before I met you. Soon enough. Stop it, stop it. It's fine. I will 'destroy' you! Michelle, I don't regret this, but I both rue and lament it. Of all the friends I've had… you're the first.</h5>
-        <h5>I'm Santa Claus! We're also Santa Claus! Oh Leela! You're the only person I could turn to; you're the only person who ever loved me. Too much work. Let's burn it and say we dumped it in the sewer.</h5>
-        <h5>They're like sex, except I'm having them! It's a T. It goes "tuh". Noooooo! I daresay that Fry has discovered the smelliest object in the known universe! Oh Leela! You're the only person I could turn to; you're the only person who ever loved me.</h5>
-   </div>
-</div>
-
+<div class="col-md-3"></div>
 <div class="col-md-6">
     <div class="jumbotron">
         <h3><i class="fa fa-users" aria-hidden="true"></i> Créer un compte</h3>
@@ -53,7 +41,7 @@ $helper->setMessageCloseString('</div>');
         $.ajax({
             url: "<?= $this->url('authentication');?>",
             method: 'POST',
-            data: $('#loginForm').serialize()
+            data: $('#registerForm').serialize()
         }).then(function(data) {
             console.log(data);
         });

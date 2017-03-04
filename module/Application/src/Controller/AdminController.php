@@ -9,7 +9,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-class AdminController extends AbstractActionController
+class AdminController extends DefaultController
 {
 
     public function indexAction()

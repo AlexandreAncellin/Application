@@ -2,24 +2,24 @@
 namespace Application\Models;
 
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Sql;
 
-class DefaultModel {
+class DefaultModel extends TableGateway {
 
-    private $_adapter;
+    protected $_db;
 
     public function __construct()
     {
-        $this->_adapter = new Adapter([
+        $this->adapter = new Adapter([
                                 'driver'   => 'Pdo_Mysql',
                                 'database' => 'Baggala',
                                 'username' => 'root',
                                 'password' => 'ALX2133SLD',
                             ]);
-    }
 
-    public function getAdapter() {
-        return $this->_adapter;
-    }
 
+        $this->_db = new Sql($this->adapter);
+    }
 
 }
