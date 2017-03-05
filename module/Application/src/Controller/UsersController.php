@@ -8,7 +8,6 @@ namespace Application\Controller;
 
 use Application\Models\UsersModel;
 use Zend\View\Model\JsonModel;
-use Zend\View\Helper\ViewModel;
 
 class UsersController extends DefaultController
 {

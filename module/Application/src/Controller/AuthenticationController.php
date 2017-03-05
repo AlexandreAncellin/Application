@@ -7,13 +7,11 @@
 
 namespace Application\Controller;
 
-use Application\Entity\User;
 use Application\Forms\LoginForm;
 use Application\Forms\RegisterForm;
 use Application\Models\UsersModel;
-use Zend\Config\Reader\Json;
-use Zend\Mvc\Controller\AbstractActionController;
 use Application\Filters\LoginFilter;
+use Zend\Session\Container;
 use Zend\View\Model\JsonModel;
 use Application\Filters\AuthenticationFilter;
 use Zend\View\Model\ViewModel;
@@ -46,8 +44,6 @@ class AuthenticationController extends DefaultController
 
                 unset($data['validate']);
 
-
-
                 $userModel = new UsersModel();
                 $userModel->insert($data);
             }
@@ -58,8 +54,10 @@ class AuthenticationController extends DefaultController
 
     public function loginAction()
     {
+
         $viewModel = new ViewModel();
         $form = new LoginForm();
+        $authentication = new Container('Authentication');
 
         if ($this->getRequest()->isPost()) {
 
@@ -73,18 +71,23 @@ class AuthenticationController extends DefaultController
                 $data = $form->getData();
 
                 $userModel = new UsersModel();
-                $isConnected = $userModel->Login($data['login'], $data['password']);
+                $userModel->login($data['login'], $data['password']);
 
-                return new JsonModel(array('isConnected' => $isConnected));
             }
-            else {
-                return new JsonModel($form->getMessages());
-            }
+
+            return new JsonModel(array('connectedUserId' => $authentication->offsetGet('connectedUserId'), 'isConnected' => $authentication->offsetGet('isConnected')));
         }
 
         $viewModel->setTerminal(true); // cache le layout
         $viewModel->setVariable('form', $form);
         return $viewModel;
+    }
+
+    public function disconnectAction() {
+        $userModel = new UsersModel();
+        $userModel->disconnect();
+
+        return $this->redirect()->toRoute('home');
     }
 
 }
