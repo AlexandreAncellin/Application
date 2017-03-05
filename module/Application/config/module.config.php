@@ -44,6 +44,16 @@ return [
                     ],
                 ],
             ],
+            'disconnect' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/deconnexion',
+                    'defaults' => [
+                        'controller' => Controller\AuthenticationController::class,
+                        'action'     => 'disconnect',
+                    ],
+                ],
+            ],
             'users' => [
                 'type'    => 'segment',
                 'options' => [

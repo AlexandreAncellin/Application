@@ -11,15 +11,24 @@ class DefaultModel extends TableGateway {
 
     public function __construct()
     {
-        $this->adapter = new Adapter([
-                                'driver'   => 'Pdo_Mysql',
-                                'database' => 'Baggala',
-                                'username' => 'root',
-                                'password' => 'ALX2133SLD',
-                            ]);
+        if (!isset($this->adapter)) {
+            $this->adapter = new Adapter([
+                'driver' => 'Pdo_Mysql',
+                'database' => 'Baggala',
+                'username' => 'root',
+                'password' => 'ALX2133SLD',
+            ]);
+        }
+    }
 
+    public function getDb() {
 
-        $this->_db = new Sql($this->adapter);
+        if (!isset($this->_db)) {
+            $this->_db = new Sql($this->adapter);
+        }
+
+        return $this->_db;
+
     }
 
 }

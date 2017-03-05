@@ -1,5 +1,11 @@
 <?= $this->doctype() ?>
 
+<?php
+    $ConnectedUserId = \Application\Models\UsersModel::getConnectedUser();
+    $UserModel = new \Application\Models\UsersModel();
+    $ConnectedUser = $UserModel->getUserById($ConnectedUserId);
+?>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -29,7 +35,17 @@
                     <li><a href="./" class="navbar-brand"><?= $this->translate('layout.application.name') ?></a></li>
                     <li><a href="./inscription"><?= $this->translate('menu.authentication') ?></a></li>
                     <li><a href="./administration"><?= $this->translate('menu.administration') ?></a> </li>
-                    <li><a id='showLogin' href="javascript:;"><?= $this->translate('menu.connexion') ?></a> </li>
+
+
+
+                    <?php if (!\Application\Models\UsersModel::isConnected()) : ?>
+                        <li><a id='showLogin' href="javascript:;"><?= $this->translate('menu.connexion') ?></a> </li>
+                    <?php else: ?>
+                        <li><a>Bonjour <?= $ConnectedUser->getFullName(); ?></a></li>
+                        <li><a href="./deconnexion"><?= $this->translate('menu.disconnect') ?></a> </li>
+                    <?php endif; ?>
+
+                    <li></li>
                 </ul>
             </div>
             <div id="authentication"></div>

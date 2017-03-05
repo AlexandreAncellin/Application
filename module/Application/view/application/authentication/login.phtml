@@ -2,7 +2,7 @@
 
     <input id='login' type="text" name='login' class="form-control" placeholder="Adresse e-mail ou mobile">
     <div class="input-group">
-        <input id='password' type="text" name='password' class="form-control" placeholder="Mot de passe">
+        <input id='password' type="password" name='password' class="form-control" placeholder="Mot de passe">
         <span class="input-group-btn">
             <button id='ValidLoginForm' class="btn btn-primary" type="button">Connexion</button>
         </span>
@@ -18,12 +18,9 @@
             method: 'POST',
             data: $('#registerForm').serialize()
         }).then(function(data) {
+            console.log(data);
             if (data.isConnected) {
-                alert('connecté !');
-            }
-            else
-            {
-                alert ('pas connecté :(');
+                window.location = "<?= $this->url('home');?>";
             }
         });
     })

@@ -6,10 +6,8 @@
 
 namespace Application\Models;
 
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Adapter\Adapter;
 use Application\Entity\User;
+use Zend\Session\Container;
 
 class UsersModel extends DefaultModel {
 
@@ -18,64 +16,116 @@ class UsersModel extends DefaultModel {
         parent::__construct();
 
         $this->table = 'Users';
-        $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new User());
 
         $this->initialize();
+    }
+
+    public function getUserById($UsersId) {
+
+        if (is_null($UsersId))
+            return NULL;
+
+        $select = $this->getDb()->select()
+            ->from($this->table)
+            ->where(['IdUsers' => $UsersId]);
+
+        $statement = $this->getDb()->prepareStatementForSqlObject($select);
+
+        $userData = $statement->execute()->current();
+
+        $user = new User();
+
+        if ($userData)
+            $user->hydrate($userData);
+
+        return $user;
+
     }
 
     public function getUsers() {
         return $this->select()->toArray();
     }
 
-   /* public function getUserByEmail($email) {
-
-        $select = $this->_db    ->select()
-                                ->from($this->table)
-                                ->where(['email' => $email]);
-        $statement = $this->_db->prepareStatementForSqlObject($select);
-
-        return $statement->execute()->count() === 1 ? true : false;
-    }*/
-
-    /**
-     * Retourne vrai si l'email existe, faux sinon
-     * @param string $email
-     * @return bool
-     */
     public function checkIfEmailExist($email) {
 
-        $select = $this->_db ->select()
-                            ->from($this->table)
-                            ->where(['email' => $email]);
+        $select = $this->getDb()->select()
+                                ->from($this->table)
+                                ->where(['email' => $email]);
 
-        $statement = $this->_db->prepareStatementForSqlObject($select);
+        $statement = $this->getDb()->prepareStatementForSqlObject($select);
 
         return $statement->execute()->count() > 0 ? true : false;
     }
 
     public function getUserByEmail($email) {
 
-        $select = $this->_db ->select()
-            ->from($this->table)
-            ->where(['email' => $email]);
+        $select = $this->getDb()->select()
+                                ->from($this->table)
+                                ->where(['email' => $email]);
 
-        $statement = $this->_db->prepareStatementForSqlObject($select);
+        $statement = $this->getDb()->prepareStatementForSqlObject($select);
 
         return $statement->execute()->current();
     }
 
     public function login($email, $password) {
 
-        $select = $this->_db ->select()
-            ->from($this->table)
-            ->where(['email' => $email, 'password' => $password]);
+        $select = $this->getDb()->select()
+                                ->from($this->table)
+                                ->where(['email' => $email, 'password' => $password]);
 
-        $statement = $this->_db->prepareStatementForSqlObject($select);
+        $statement = $this->getDb()->prepareStatementForSqlObject($select);
 
-        return $statement->execute()->count() == 1 ? true : false;
+        $authentication = new Container('Authentication');
+        $isConnected = false;
+
+        $userData = $statement->execute()->current();
+
+        if ($userData) {
+            $isConnected = true;
+            $user = new User();
+            $user->hydrate($userData);
+            $authentication->offsetSet('connectedUserId', $user->idUsers);
+        }
+        else {
+            $authentication->offsetSet('connectedUserId', NULL);
+        }
+
+        $authentication->offsetSet('isConnected', $isConnected);
+        return $isConnected;
     }
 
+    public static function isConnected() {
 
+        $authentication = new Container('Authentication');
+
+        $isConnected = $authentication->offsetGet('isConnected');
+
+        if (!isset($isConnected))
+            $authentication->offsetSet('isConnected', false);
+
+        return (bool) $authentication->offsetGet('isConnected');
+    }
+
+    public static function getConnectedUser() {
+
+        $authentication = new Container('Authentication');
+
+        $userConnected = $authentication->offsetGet('connectedUserId');
+
+        if (!isset($userConnected))
+            $authentication->offsetSet('connectedUserId', NULL);
+
+        return array('connectedUserId' => $authentication->offsetGet('connectedUserId'));
+    }
+
+    public static function disconnect() {
+
+        $authentication = new Container('Authentication');
+
+        $authentication->offsetSet('connectedUserId', NULL);
+        $authentication->offsetSet('isConnected', false);
+
+    }
 
 }
