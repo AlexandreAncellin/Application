@@ -1,33 +1,14 @@
-<?php $form = $this->form; ?>
+<form id='registerForm' class="navbar-form navbar-right">
 
-<?php
-$helper = $this->formElementErrors();
-$helper->setMessageOpenFormat('<div class="alert alert-danger">');
-$helper->setMessageCloseString('</div>');
-?>
+    <input id='login' type="text" name='login' class="form-control" placeholder="Adresse e-mail ou mobile">
+    <div class="input-group">
+        <input id='password' type="text" name='password' class="form-control" placeholder="Mot de passe">
+        <span class="input-group-btn">
+            <button id='ValidLoginForm' class="btn btn-primary" type="button">Connexion</button>
+        </span>
+    </div><!-- /input-group -->
 
-<div class="col-md-3"></div>
-
-<div class="col-md-6">
-    <div class="jumbotron">
-        <h3><i class="fa fa-users" aria-hidden="true"></i> Se connecter à <?= $this->translate('layout.application.name') ?></h3>
-        <hr>
-
-        <?= $this->form()->openTag($form) ?>
-
-        <div class="form-group">
-            <?= $this->formRow($form->get('login')) ?>
-        </div>
-
-        <div class="form-group">
-            <?= $this->formRow($form->get('password')) ?>
-        </div>
-
-        <?= $this->formButton($form->get('validate')) ?>
-
-        <?= $this->form()->closeTag() ?>
-    </div>
-</div>
+</form>
 
 <script>
 
@@ -37,7 +18,13 @@ $helper->setMessageCloseString('</div>');
             method: 'POST',
             data: $('#registerForm').serialize()
         }).then(function(data) {
-            console.log(data);
+            if (data.isConnected) {
+                alert('connecté !');
+            }
+            else
+            {
+                alert ('pas connecté :(');
+            }
         });
     })
 
