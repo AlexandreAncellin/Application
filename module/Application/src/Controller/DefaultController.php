@@ -10,11 +10,5 @@ use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
 class DefaultController extends AbstractActionController
 {
-    private $flashMessenger;
-
-    public function __construct()
-    {
-        $this->flashMessenger = new FlashMessenger();
-    }
 
 }

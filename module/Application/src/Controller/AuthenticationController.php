@@ -11,16 +11,20 @@ use Application\Entity\User;
 use Application\Forms\LoginForm;
 use Application\Forms\RegisterForm;
 use Application\Models\UsersModel;
+use Zend\Config\Reader\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\Filters\LoginFilter;
 use Zend\View\Model\JsonModel;
 use Application\Filters\AuthenticationFilter;
 use Zend\View\Model\ViewModel;
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
 
 class AuthenticationController extends DefaultController
 {
     public function registerAction()
     {
+        $flashMessenger = new FlashMessenger();
+
         $form = new RegisterForm();
         $userModel = new UsersModel();
 
@@ -36,7 +40,7 @@ class AuthenticationController extends DefaultController
                 $data = $form->getData();
 
                 if ($userModel->checkIfEmailExist($data['email'])) {
-                    $this->flashMessenger()->addMessage('You are now logged in.');
+                    $flashMessenger->addMessage('You are now logged in.');
                     return $this->redirect()->toRoute('user-success');
                 }
 
@@ -55,8 +59,6 @@ class AuthenticationController extends DefaultController
     public function loginAction()
     {
         $viewModel = new ViewModel();
-
-
         $form = new LoginForm();
 
         if ($this->getRequest()->isPost()) {
@@ -68,17 +70,21 @@ class AuthenticationController extends DefaultController
 
             if ($form->isValid()) {
 
-                $userModel = new UsersModel();
-                $user = $userModel->getUserByEmail($_POST['login']);
+                $data = $form->getData();
 
-                return new JsonModel($user);
+                $userModel = new UsersModel();
+                $isConnected = $userModel->Login($data['login'], $data['password']);
+
+                return new JsonModel(array('isConnected' => $isConnected));
+            }
+            else {
+                return new JsonModel($form->getMessages());
             }
         }
 
-        $viewModel->setTerminal(true);
+        $viewModel->setTerminal(true); // cache le layout
         $viewModel->setVariable('form', $form);
         return $viewModel;
-
     }
 
 }

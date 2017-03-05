@@ -28,6 +28,16 @@ class UsersModel extends DefaultModel {
         return $this->select()->toArray();
     }
 
+   /* public function getUserByEmail($email) {
+
+        $select = $this->_db    ->select()
+                                ->from($this->table)
+                                ->where(['email' => $email]);
+        $statement = $this->_db->prepareStatementForSqlObject($select);
+
+        return $statement->execute()->count() === 1 ? true : false;
+    }*/
+
     /**
      * Retourne vrai si l'email existe, faux sinon
      * @param string $email
@@ -42,6 +52,28 @@ class UsersModel extends DefaultModel {
         $statement = $this->_db->prepareStatementForSqlObject($select);
 
         return $statement->execute()->count() > 0 ? true : false;
+    }
+
+    public function getUserByEmail($email) {
+
+        $select = $this->_db ->select()
+            ->from($this->table)
+            ->where(['email' => $email]);
+
+        $statement = $this->_db->prepareStatementForSqlObject($select);
+
+        return $statement->execute()->current();
+    }
+
+    public function login($email, $password) {
+
+        $select = $this->_db ->select()
+            ->from($this->table)
+            ->where(['email' => $email, 'password' => $password]);
+
+        $statement = $this->_db->prepareStatementForSqlObject($select);
+
+        return $statement->execute()->count() == 1 ? true : false;
     }
 
 
