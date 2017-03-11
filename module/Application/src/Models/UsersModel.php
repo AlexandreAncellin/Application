@@ -92,7 +92,18 @@ class UsersModel extends DefaultModel {
         }
 
         $authentication->offsetSet('isConnected', $isConnected);
-        return $isConnected;
+
+        return !is_null($user->idUsers) ? $user->idUsers : NULL;
+    }
+
+
+    public static function cryptPassword($password) {
+
+        $options = [
+            'cost' => 12,
+        ];
+
+        return password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
     public static function isConnected() {
@@ -126,6 +137,14 @@ class UsersModel extends DefaultModel {
         $authentication->offsetSet('connectedUserId', NULL);
         $authentication->offsetSet('isConnected', false);
 
+    }
+
+    public function deleteUser($idUser) {
+
+        $request = $this->getDb()->delete($this->table)->where(array('idUsers' => $idUser));
+        $statement = $this->getDb()->prepareStatementForSqlObject($request);
+
+        return $statement->execute()->getAffectedRows() === 1 ? true : false;
     }
 
 }

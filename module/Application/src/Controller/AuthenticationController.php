@@ -37,9 +37,11 @@ class AuthenticationController extends DefaultController
 
                 $data = $form->getData();
 
+                $data['password'] = $userModel->cryptPassword($data['password']);
+
                 if ($userModel->checkIfEmailExist($data['email'])) {
-                    $flashMessenger->addMessage('You are now logged in.');
-                    return $this->redirect()->toRoute('user-success');
+                    $flashMessenger->addMessage('Inscription OK');
+                    return $this->redirect()->toRoute('home');
                 }
 
                 unset($data['validate']);
@@ -54,6 +56,7 @@ class AuthenticationController extends DefaultController
 
     public function loginAction()
     {
+        $flashMessenger = new FlashMessenger();
 
         $viewModel = new ViewModel();
         $form = new LoginForm();
@@ -63,7 +66,6 @@ class AuthenticationController extends DefaultController
 
             $loginFilter = new LoginFilter();
             $form->setInputFilter($loginFilter->getInputFilter());
-
             $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
@@ -71,8 +73,13 @@ class AuthenticationController extends DefaultController
                 $data = $form->getData();
 
                 $userModel = new UsersModel();
-                $userModel->login($data['login'], $data['password']);
+                $userConnectedId = $userModel->login($data['login'], $data['password']);
 
+                if (!is_null($userConnectedId)) {
+                    $flashMessenger->addMessage('Vous vous êtes bien connecté sur Baggala.');
+                } else {
+                    $flashMessenger->addMessage('Mot de passe ou identifiant incorrect');
+                }
             }
 
             return new JsonModel(array('connectedUserId' => $authentication->offsetGet('connectedUserId'), 'isConnected' => $authentication->offsetGet('isConnected')));

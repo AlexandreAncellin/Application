@@ -18,8 +18,9 @@
             method: 'POST',
             data: $('#registerForm').serialize()
         }).then(function(data) {
-            console.log(data);
             if (data.isConnected) {
+                window.location = "<?= $this->url('userWall');?>";
+            } else {
                 window.location = "<?= $this->url('home');?>";
             }
         });

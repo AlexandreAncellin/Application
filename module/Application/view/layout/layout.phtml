@@ -4,6 +4,7 @@
     $ConnectedUserId = \Application\Models\UsersModel::getConnectedUser();
     $UserModel = new \Application\Models\UsersModel();
     $ConnectedUser = $UserModel->getUserById($ConnectedUserId);
+    $flashMessenger = new \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger();
 ?>
 
 <html lang="en">
@@ -34,9 +35,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="./" class="navbar-brand"><?= $this->translate('layout.application.name') ?></a></li>
                     <li><a href="./inscription"><?= $this->translate('menu.authentication') ?></a></li>
-                    <li><a href="./administration"><?= $this->translate('menu.administration') ?></a> </li>
-
-
 
                     <?php if (!\Application\Models\UsersModel::isConnected()) : ?>
                         <li><a id='showLogin' href="javascript:;"><?= $this->translate('menu.connexion') ?></a> </li>
@@ -47,14 +45,22 @@
 
                     <li></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="./administration"><?= $this->translate('menu.administration') ?></a> </li>
+                </ul>
             </div>
             <div id="authentication"></div>
         </div>
     </div>
+    <div class="col-md-3"></div>
 
+    <?= $this->getMessages(\Application\Helpers\MessagesHelper::DANGER); ?>
+
+    <div class="row"></div>
         <div class="container">
             <?= $this->content ?>
         </div>
+
         <?= $this->inlineScript() ?>
     </body>
 </html>
@@ -70,14 +76,12 @@
         });
     });
 
+    app.controller('MessagesController', function($scope, $http) {
+        $http.get("<?= $this->url('getMessages');?>")
+            .then(function(response) {
+                $scope.messages = response.data;
+                console.log($scope.messages);
+            });
+    });
 
-    /*$('#ValidLoginForm').click(function() {
-        $.ajax({
-            url: "<?= $this->url('login');?>",
-            method: 'POST',
-            data: $('#registerForm').serialize()
-        }).then(function(data) {
-            console.log(data);
-        });
-    })*/
 </script>
