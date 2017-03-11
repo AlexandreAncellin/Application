@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Application\Helpers\MessagesHelper;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -64,6 +65,16 @@ return [
                     ],
                 ],
             ],
+            'deleteUser' => [
+                'type'    => 'segment',
+                'options' => [
+                    'route'    => '/user/delete[/:id]',
+                    'defaults' => [
+                        'controller' => Controller\UsersController::class,
+                        'action'     => 'deleteUser',
+                    ],
+                ],
+            ],
             'wall' => [
                 'type'    => 'segment',
                 'options' => [
@@ -84,6 +95,26 @@ return [
                     ],
                 ],
             ],
+            'getMessages' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/getMessages',
+                    'defaults' => [
+                        'controller' => Controller\DefaultController::class,
+                        'action'     => 'getFlashMessages',
+                    ],
+                ],
+            ],
+            'userWall' => [
+                'type'    => 'segment',
+                'options' => [
+                    'route'    => '/maPage[/:id]',
+                    'defaults' => [
+                        'controller' => Controller\UserWallController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -92,7 +123,8 @@ return [
             Controller\AuthenticationController::class => InvokableFactory::class,
             Controller\AdminController::class => InvokableFactory::class,
             Controller\UsersController::class => InvokableFactory::class,
-            Controller\WallController::class => InvokableFactory::class,
+            Controller\UserWallController::class => InvokableFactory::class,
+            Controller\DefaultController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
@@ -111,6 +143,14 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'view_helpers' => array(
+        'factories' => [
+            Helpers\MessagesHelper::class => InvokableFactory::class,
+        ],
+        'aliases' => [
+            'getMessages' => Helpers\MessagesHelper::class,
+        ],
+    ),
     'translator' => array(
         'locale' => 'fr_FR',
         'translation_file_patterns' => array(
@@ -121,5 +161,4 @@ return [
             ),
         ),
     ),
-
 ];

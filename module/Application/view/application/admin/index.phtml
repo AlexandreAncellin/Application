@@ -7,23 +7,34 @@
         <th>Mot de Passe</th>
         <th>Editer</th>
     </tr>
-    <tr ng-repeat="user in users">
+    <tr ng-show="{{user.showUser}}" id="{{user.idUsers}}" ng-repeat="user in users">
         <td>{{user.firstname}}</td>
         <td>{{user.lastname}}</td>
         <td>{{user.email}}</td>
         <td>{{user.password}}</td>
-        <td><button type="button" class="btn btn-primary btn-sm">Supprimer</button></td>
+        <td><button ng-click="deleteUser(user)" type="button" class="btn btn-primary btn-sm">Supprimer</button></td>
     </tr>
 </table>
 
 <script>
 
     app.controller('UsersController', function($scope, $http) {
-        $http.get("<?= $this->url('users', array("id", 1));?>")
+        $http.get("<?= $this->url('users');?>")
             .then(function(response) {
                 $scope.users = response.data;
-                console.log($scope.users);
+                angular.forEach($scope.users, function(user, key) {
+                    user.showUser = true;
+                });
             });
+
+        $scope.deleteUser = function(user) {
+            $http.delete("<?= $this->url('deleteUser');?>" + '/' + user.idUsers)
+                .then(function(response) {
+                   if(response.deleted) {
+                        user.showUser = false;
+                   }
+                });
+        }
     });
 
 </script>

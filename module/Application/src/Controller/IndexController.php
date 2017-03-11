@@ -7,10 +7,8 @@
 
 namespace Application\Controller;
 
-use Application\Models\UsersModel;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Session\Container;
-use Zend\View\Helper\Placeholder\Registry;
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Zend\View\Model\ViewModel;
 
 class IndexController extends DefaultController
 {
